@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import Context from "../contexts/Context";
+import TaskRow from "../components/TaskRow";
 
 export default function TaskList() {
   const { tasks } = useContext(Context);
@@ -13,6 +14,18 @@ export default function TaskList() {
           <th>Data di Creazione</th>
         </tr>
       </thead>
+      <tbody>
+        {tasks.map((task) => {
+          return (
+            <TaskRow
+              key={task.id}
+              title={task.title}
+              status={task.status}
+              createdAt={task.createdAt}
+            />
+          );
+        })}
+      </tbody>
     </table>
   );
 }
