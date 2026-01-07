@@ -1,24 +1,13 @@
 import { createContext, useEffect, useState } from "react";
-const api = import.meta.env.VITE_API_URL;
+import useTasks from "../hooks/useTasks";
 
 const TaskContext = createContext();
 
 export function ListProvider({ children }) {
-  const [tasks, setTasks] = useState([]);
-  useEffect(() => {
-    fetch(`${api}/tasks`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTasks(data);
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("fetch error", error);
-      });
-  }, []);
+  const { tasks, addTask, removeTask, updateTasks } = useTasks();
 
   return (
-    <TaskContext.Provider value={{ tasks, setTasks }}>
+    <TaskContext.Provider value={{ tasks, addTask, removeTask, updateTasks }}>
       {children}
     </TaskContext.Provider>
   );
