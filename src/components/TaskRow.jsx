@@ -15,7 +15,6 @@ function TaskRow({ id, title, status, createdAt }) {
     <tr>
       <td>
         <Link to={`/task/${id}`}>{title}</Link>
-        {title}
       </td>
       <td style={{ backgroundColor: colore }}>{status}</td>
       <td>{createdAt}</td>

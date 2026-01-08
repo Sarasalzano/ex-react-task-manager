@@ -1,6 +1,8 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
+import Context from "../contexts/Context";
 
-export default function AddTask({ addTask }) {
+export default function AddTask() {
+  const { addTask } = useContext(Context);
   const [title, setTitle] = useState("");
   const descriptionRef = useRef();
   const statusRef = useRef();

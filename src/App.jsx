@@ -8,18 +8,16 @@ import TaskDetail from "./pages/TaskDetail";
 
 function App() {
   return (
-    <>
-      <ListProvider>
-        <BrowserRouter>
-          <NavBar />
-          <Routes>
-            <Route path="/" element={<TaskList />} />
-            <Route path="/addtask" element={<AddTask />} />
-            <Route path="/task/:id" element={<TaskDetail />} />
-          </Routes>
-        </BrowserRouter>
-      </ListProvider>
-    </>
+    <ListProvider>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<TaskList />} />
+          <Route path="/addtask" element={<AddTask />} />
+          <Route path="/task/:id" element={<TaskDetail />} />
+        </Routes>
+      </BrowserRouter>
+    </ListProvider>
   );
 }
 
