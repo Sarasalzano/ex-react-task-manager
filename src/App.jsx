@@ -4,6 +4,7 @@ import TaskList from "./pages/TaskList";
 import AddTask from "./pages/AddTask";
 import NavBar from "./components/Navbar";
 import { ListProvider } from "./contexts/Context";
+import TaskDetail from "./pages/TaskDetail";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<TaskList />} />
             <Route path="/addtask" element={<AddTask />} />
+            <Route path="/task/:id" element={<TaskDetail />} />
           </Routes>
         </BrowserRouter>
       </ListProvider>
