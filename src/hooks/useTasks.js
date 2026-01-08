@@ -29,7 +29,26 @@ export default function useTasks() {
     setTasks((prev) => [...prev, data.task]);
   };
 
-  const removeTask = () => {};
+  const removeTask = async (id) => {
+    try {
+      const res = await fetch(`${api}/tasks/${id}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        // rimuovo il task dallo stato globale
+        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+        console.log("Task eliminata");
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      console.error("Errore fetch", error);
+    }
+  };
+
   const updateTasks = () => {};
 
   return { tasks, addTask, removeTask, updateTasks };
