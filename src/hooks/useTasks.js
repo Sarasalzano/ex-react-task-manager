@@ -49,7 +49,34 @@ export default function useTasks() {
     }
   };
 
-  const updateTasks = () => {};
+const updateTask = async (updatedTask) => {
+  try {
+    const res = await fetch(`${api}/tasks/${updatedTask.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedTask),
+    });
 
-  return { tasks, addTask, removeTask, updateTasks };
+    const data = await res.json();
+
+    if (!data.success) {
+      throw new Error(data.message);
+    }
+
+    // Aggiorno lo stato globale sostituendo il task aggiornato
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === data.task.id ? data.task : task
+      )
+    );
+
+    console.log("Task aggiornata:", data.task);
+  } catch (error) {
+    console.error("Errore aggiornamento task:", error);
+    throw error; // così chi chiama updateTask può mostrare alert o modale
+  }
+};
+
+
+  return { tasks, addTask, removeTask, updateTask };
 }
