@@ -19,6 +19,7 @@ export default function TaskList() {
           return (
             <TaskRow
               key={task.id}
+              id={task.id}
               title={task.title}
               status={task.status}
               createdAt={task.createdAt}
