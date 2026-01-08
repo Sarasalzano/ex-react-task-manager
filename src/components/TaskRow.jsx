@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-function TaskRow({ title, status, createdAt }) {
+function TaskRow({ id, title, status, createdAt }) {
   let colore;
   if (status === "To do") {
     colore = "red";
@@ -12,7 +13,10 @@ function TaskRow({ title, status, createdAt }) {
 
   return (
     <tr>
-      <td>{title}</td>
+      <td>
+        <Link to={`/task/${id}`}>{title}</Link>
+        {title}
+      </td>
       <td style={{ backgroundColor: colore }}>{status}</td>
       <td>{createdAt}</td>
     </tr>
