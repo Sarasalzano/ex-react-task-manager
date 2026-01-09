@@ -8,7 +8,8 @@ export default function TaskDetail() {
   const { id } = useParams(); // prendo l'id dalla URL
   const { tasks, removeTask, updateTask } = useContext(Context); // aggiunto removeTask
 
-  const task = tasks.find((t) => t.id === id);
+  const task = tasks.find((t) => t.id.toString() === id);
+
   if (!task) return "Task non trovato";
 
   const [showModal, setShowModal] = useState(false);
