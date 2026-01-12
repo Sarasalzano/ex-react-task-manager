@@ -39,7 +39,9 @@ export default function useTasks() {
 
       if (data.success) {
         // rimuovo il task dallo stato globale
-        setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+        setTasks((prevTasks) =>
+          prevTasks.filter((task) => task.id !== Number(id))
+        );
         console.log("Task eliminata");
       } else {
         throw new Error(data.message);
@@ -49,34 +51,31 @@ export default function useTasks() {
     }
   };
 
-const updateTask = async (updatedTask) => {
-  try {
-    const res = await fetch(`${api}/tasks/${updatedTask.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedTask),
-    });
+  const updateTask = async (updatedTask) => {
+    try {
+      const res = await fetch(`${api}/tasks/${updatedTask.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedTask),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!data.success) {
-      throw new Error(data.message);
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      // Aggiorno lo stato globale sostituendo il task aggiornato
+      setTasks((prevTasks) =>
+        prevTasks.map((task) => (task.id === data.task.id ? data.task : task))
+      );
+
+      console.log("Task aggiornata:", data.task);
+    } catch (error) {
+      console.error("Errore aggiornamento task:", error);
+      throw error; // così chi chiama updateTask può mostrare alert o modale
     }
-
-    // Aggiorno lo stato globale sostituendo il task aggiornato
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === data.task.id ? data.task : task
-      )
-    );
-
-    console.log("Task aggiornata:", data.task);
-  } catch (error) {
-    console.error("Errore aggiornamento task:", error);
-    throw error; // così chi chiama updateTask può mostrare alert o modale
-  }
-};
-
+  };
 
   return { tasks, addTask, removeTask, updateTask };
 }
